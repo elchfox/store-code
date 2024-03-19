@@ -44,7 +44,7 @@ const Products: React.FC = (props) => {
           </div>
           <PaginationCustom count={countPages} onChange={(page)=> setCurrentPage(page - 1)} />
         </div>
-        {productSelected && <ProductDetails {...productSelected} />}
+         <ProductDetails {...productSelected} />
       </div>
     </div>
   );
