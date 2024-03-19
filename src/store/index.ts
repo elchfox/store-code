@@ -1,8 +1,8 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import mystoreSlice from "./features/mystore/mystoreSlice";
+import { ThunkDispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
+import productsSlice from "./features/products/productsSlice";
 
 const rootReducer = combineReducers({
-  mystore: mystoreSlice,
+  products: productsSlice,
 });
 
 const store = configureStore({

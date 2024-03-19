@@ -1,28 +1,26 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Products from "../components/Products";
-import useFetch from "../hooks/useFetch";
-import { setProducts } from "../store/features/mystore/mystoreSlice";
+import { RootState } from "../store";
+import {
+  fetchProducts
+} from "../store/features/products/productsSlice";
 
 const Home: React.FC = () => {
-  const { data, isLoading } = useFetch("/products");
-
-  const dispatch = useDispatch();
-
+  const dispatch = useDispatch<any>();
+  const {loading,products,error} = useSelector((state: RootState) => state.products);
   useEffect(() => {
-    if (!isLoading) {
-      dispatch(setProducts(data));
-    }
-  }, [isLoading]);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  if (isLoading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <div className="container">
-        <Products/>
+        <Products />
       </div>
     </div>
   );
