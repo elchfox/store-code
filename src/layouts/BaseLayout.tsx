@@ -6,7 +6,9 @@ const BaseLayout = () => {
   return (
     <div>
       <Header />
-      <Outlet />
+      <div className="content">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

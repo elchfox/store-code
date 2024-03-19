@@ -2,12 +2,19 @@ import { useState } from "react";
 import { IProduct } from "../../types";
 import styles from "./Product.module.scss";
 import { TextField } from "@mui/material";
+import Card from "../Card";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
+let timer: any;
 
 const ProductDetails: React.FC<IProduct> = (props) => {
+  const { createMode } = useSelector((state: RootState) => state.products);
+
   const [product, setProduct] = useState(props);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const timer = setTimeout(
+    clearTimeout(timer);
+    timer = setTimeout(
       () =>
         setProduct({
           ...product,
@@ -15,37 +22,30 @@ const ProductDetails: React.FC<IProduct> = (props) => {
         }),
       250
     );
-    clearTimeout(timer);
   };
+
   return (
-    <div className={styles.product}>
+    <Card className={`${styles.product} flex column gap-m`} style={{ maxWidth: "16rem", width: "100%" }}>
       <img src={product.thumbnail} className={styles.img} alt={product.title} />
-      <div className={styles.content}>
+      <div className={"flex column gap-m"}>
         <TextField
           label="title"
           name={"title"}
-          variant="outlined"
-          onChange={onChange}
-          value={product.title}
-        />
-        <TextField
-          label="title"
-          name={"title"}
-          variant="outlined"
+          variant="filled"
           onChange={onChange}
           value={product.title}
         />
         <TextField
           label="description"
           name={"description"}
-          variant="outlined"
+          variant="filled"
           onChange={onChange}
           value={product.description}
         />
         <TextField
           label="price"
           name={"price"}
-          variant="outlined"
+          variant="filled"
           onChange={onChange}
           value={product.price}
         />
@@ -54,7 +54,7 @@ const ProductDetails: React.FC<IProduct> = (props) => {
       <div>
         <button className="btn">Save</button>
       </div>
-    </div>
+    </Card>
   );
 };
 

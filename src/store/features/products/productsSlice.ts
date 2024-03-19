@@ -6,11 +6,13 @@ type productState = {
   products: IProduct[];
   loading: boolean;
   error?: string | null;
+  createMode: boolean;
 };
 
 const initialState: productState = {
   products: [],
   loading: false,
+  createMode: false,
   error: "",
 };
 export const fetchProducts = createAsyncThunk(
@@ -29,8 +31,37 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setProducts(state, action: PayloadAction<IProduct[]>) {
-      state.products = action.payload;
+    setCreateModeToggle(state) {
+      state.createMode = !state.createMode;
+    },
+    productCreateAndUpdate(state, action: PayloadAction<IProduct>) {
+      const products = state.products;
+      const updateOrCreatedDate = new Date();
+      if (action.payload.id) {
+        const indexOf = products.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        products[indexOf] = {
+          ...products[indexOf],
+          ...action.payload,
+          updateDate: updateOrCreatedDate,
+        };
+      } else {
+        products.unshift({
+          ...action.payload,
+          updateDate: updateOrCreatedDate,
+          createDate: updateOrCreatedDate,
+        });
+      }
+      localStorage.setItem("/products", JSON.stringify(products));
+      state.products = products;
+    },
+    productDeleteById(state, action: PayloadAction<number | string>) {
+      const products = state.products;
+      const indexOf = products.findIndex((item) => item.id === action.payload);
+      indexOf >= 0 && products.splice(indexOf, 1);
+      localStorage.setItem("/products", JSON.stringify(products));
+      state.products = products;
     },
   },
   extraReducers: (builder) => {
@@ -49,6 +80,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setProducts } = productsSlice.actions;
+export const { productCreateAndUpdate, productDeleteById,setCreateModeToggle } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;

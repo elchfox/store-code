@@ -1,43 +1,10 @@
 .footer {
   background-color: #333;
   color: #fff;
-  padding: 30px 0;
+  padding: 1rem;
   .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .menu {
-    display: flex;
-    gap: 20px;
-    .item {
-      text-transform: uppercase;
-      font-size: 14px;
-      cursor: pointer;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: #ccc;
-      }
-    }
-  }
-
-  .social {
-    display: flex;
-    gap: 10px;
-    .icon {
-      font-size: 20px;
-      color: #ccc;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: #fff;
-      }
-    }
   }
 }

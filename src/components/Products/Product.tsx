@@ -1,21 +1,25 @@
+import { Button, Typography } from "@mui/material";
 import { IProduct } from "../../types";
 import styles from "./Product.module.scss";
+import Card from "../Card";
 type IProductProps = {
   onClick?: () => void;
 } & IProduct;
 const Product: React.FC<IProductProps> = (props) => {
-  const {onClick, title, thumbnail, description, ...rest } = props;
+  const { onClick, title, thumbnail, description, ...rest } = props;
   return (
-    <div className={styles.product} onClick={onClick}>
+    <Card className={styles.product} onClick={onClick}>
       <img src={thumbnail} className={styles.img} alt={title} />
       <div className={styles.content}>
-        <p className={styles.title}>{title}</p>
-        <p className={styles.description}>{description}</p>
+        <Typography variant={"h5"} component={"b"}>{title}</Typography>
+        <Typography variant={"body1"}>{description}</Typography>
+        {/* <p className={styles.title}>{title}</p>
+        <p className={styles.description}>{description}</p> */}
       </div>
       <div>
-        <button className="btn danger">Delete</button>
+        <Button color={"error"} variant={"contained"}>Delete</Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

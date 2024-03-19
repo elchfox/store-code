@@ -8,7 +8,7 @@ import {
 
 const Home: React.FC = () => {
   const dispatch = useDispatch<any>();
-  const {loading,products,error} = useSelector((state: RootState) => state.products);
+  const { loading } = useSelector((state: RootState) => state.products);
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
