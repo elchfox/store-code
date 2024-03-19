@@ -1,15 +1,15 @@
 export type IProduct = {
-  id: number | string;
+  id?: number | string;
   title: string;
-  description: string;
+  description?: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
+  brand?: string;
+  category?: string;
+  thumbnail?: string;
+  images?: string[];
   updateDate?: Date;
   createDate?: Date;
 };

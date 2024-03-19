@@ -50,7 +50,7 @@ const COLORS: IColors = {
   },
   error: {
     light: "#FFAC82",
-    main: "#FF5630",
+    main: "#dc3545",
     dark: "#B71D18",
   },
   text: {

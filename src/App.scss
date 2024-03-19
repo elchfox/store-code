@@ -8,6 +8,7 @@
 .danger {
   background-color: var(--error);
 }
+
 button {
   cursor: pointer;
   border-radius: 0.25rem;
@@ -23,6 +24,7 @@ button {
     color: var(--white);
   }
 }
+
 @media (max-width: 768px) {
   .container {
     padding: 0 0.5rem;
@@ -36,6 +38,7 @@ button {
   gap: 1rem;
   justify-content: space-between;
 }
+
 .products-list {
   display: flex;
   flex-direction: column;
@@ -44,22 +47,28 @@ button {
 
 .flex {
   display: flex;
+
   &.row {
     flex-direction: row;
   }
+
   &.column {
     flex-direction: column;
   }
+
   &.gap-s {
     gap: 0.25rem;
   }
+
   &.gap-m {
     gap: 0.5rem;
   }
+
   &.gap-l {
     gap: 1rem;
   }
-  &.items-start{
+
+  &.items-start {
     align-items: flex-start;
   }
 }
@@ -69,5 +78,11 @@ button {
   gap: 1rem;
   padding: 1rem;
   border-radius: 0.5rem;
-  box-shadow:  0 0.5rem 2rem rgba(149, 157, 165, 0.2);
+  transition: 0.5s;
+  box-shadow: 0 0.5rem 2rem rgba(149, 157, 165, 0.2);
+  cursor: pointer;
+
+  &.active {
+    border: 1px solid var(--primary)
+  }
 }
