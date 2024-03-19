@@ -1,24 +1,21 @@
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import "./App.scss";
-import { Provider } from "react-redux";
-import store from "./store";
-import BaseLayout from "./layouts/BaseLayout";
 import { ThemeProvider } from "@mui/material";
-import { theme } from "./themeMui";
+import { Provider } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import "./App.scss";
+import BaseLayout from "./layouts/BaseLayout";
+import NotFound from "./pages/NotFound";
+import ProductsPage from "./pages/ProductsPage";
+import store from "./store";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
       <Routes>
         <Route path="/" element={<BaseLayout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<ProductsPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
-        </Routes>
-        </ThemeProvider>
+      </Routes>
     </Provider>
   );
 };

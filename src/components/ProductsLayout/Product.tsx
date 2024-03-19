@@ -1,9 +1,11 @@
-import { Button, Typography } from "@mui/material";
-import { IProduct } from "../../types";
-import styles from "./Product.module.scss";
-import Card from "../Card";
+import { Button, Typography } from "antd";
 import { useDispatch } from "react-redux";
-import { productDeleteById } from "../../store/features/products/productsSlice";
+import { IProduct } from "../../types";
+import Card from "../Card";
+import styles from "./Product.module.scss";
+import { productDeleteById } from "../../store/products/productsSlice";
+const { Title, Paragraph } = Typography;
+
 type IProductProps = {
   onClick?: () => void;
   isActive: boolean;
@@ -22,13 +24,11 @@ const Product: React.FC<IProductProps> = (props) => {
     >
       <img src={thumbnail} className={styles.img} alt={title} />
       <div className={styles.content}>
-        <Typography variant={"h5"} component={"b"}>
-          {title}
-        </Typography>
-        <Typography variant={"body1"}>{description}</Typography>
+        <Title level={5}>{title}</Title>
+        <Paragraph>{description}</Paragraph>
       </div>
       <div>
-        <Button color={"error"} variant={"contained"} onClick={onDelete}>
+        <Button type="primary" danger onClick={onDelete}>
           Delete
         </Button>
       </div>

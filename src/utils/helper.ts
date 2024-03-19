@@ -1,3 +1,3 @@
-export const test = ()=>{
-
-}
+export const sortBy = (data: any[], keyName: string) => {
+  return {};
+};

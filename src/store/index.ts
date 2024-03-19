@@ -1,5 +1,5 @@
 import { ThunkDispatch, combineReducers, configureStore } from "@reduxjs/toolkit";
-import productsSlice from "./features/products/productsSlice";
+import productsSlice from "./products/productsSlice";
 
 const rootReducer = combineReducers({
   products: productsSlice,

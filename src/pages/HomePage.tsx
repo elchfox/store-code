@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Products from "../components/Products";
+import ProductsLayout from "../components/ProductsLayout";
 import { RootState } from "../store";
 import {
   fetchProducts
-} from "../store/features/products/productsSlice";
+} from "../store/products/productsSlice";
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   const dispatch = useDispatch<any>();
   const { loading } = useSelector((state: RootState) => state.products);
   useEffect(() => {
@@ -20,10 +20,10 @@ const Home: React.FC = () => {
   return (
     <div>
       <div className="container">
-        <Products />
+        <ProductsLayout />
       </div>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

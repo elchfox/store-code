@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct } from "../../../types";
-import config from "../../../utils/config";
+import { IProduct, IStorageName } from "../../types";
+import config from "../../utils/config";
 import { v4 as uuidv4 } from "uuid";
 
 type modeType = "create" | "edit" | "none";
@@ -28,6 +28,10 @@ const initialState: productState = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchData",
   async () => {
+    const localData = localStorage.getItem(IStorageName.products);
+    if (localData) {
+      return JSON.parse(localData);
+    }
     const response = await fetch(`${config.baseUrl}/products`);
     if (!response.ok) {
       throw new Error();
