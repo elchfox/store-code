@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setModeType } from "../../store/products/productsSlice";
 import { IProduct } from "../../types";
-import { sortBy } from "../../utils/helper";
 import ToolBar from "../SearchAndSortBar";
 import ProductDetails from "./ProductDetails";
 import ProductList from "./ProductList";
+import { Flex } from "antd";
+import { sortData } from "../../utils/helper";
 
 const ProductsLayout: React.FC = () => {
   const dispatch = useDispatch<any>();
   const { products } = useSelector((state: RootState) => state.products);
-  const [renderProducts, setRenderProducts] = useState<IProduct[]>(products);
+  const [renderProducts, setRenderProducts] = useState<IProduct[]>([]);
+
+  useEffect(() => {
+    setRenderProducts(products);
+  }, [products]);
 
   const onCreate = () => {
     dispatch(setModeType("create"));
@@ -31,21 +36,19 @@ const ProductsLayout: React.FC = () => {
   };
 
   const onSort = (value: string) => {
-    setRenderProducts(
-      renderProducts.sort((a: IProduct, b: IProduct) =>
-        a.price < b.price ? 1 : -1
-      )
-    );
+    setRenderProducts(sortData(renderProducts, value));
   };
 
   return (
-    <div className="flex column gap-l">
+    <Flex gap="middle" vertical>
       <ToolBar onCreate={onCreate} onSearch={onSearch} onSort={onSort} />
-      <div className="flex row gap-l items-start">
-        <ProductList data={renderProducts} />
+      <Flex gap={"large"} style={{ alignItems: "flex-start" }}>
+        <Flex flex={1} align="center" justify="center">
+          <ProductList data={renderProducts} />
+        </Flex>
         <ProductDetails />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 

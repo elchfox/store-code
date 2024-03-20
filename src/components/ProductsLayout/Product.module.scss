@@ -1,9 +1,5 @@
 .product {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   .img {
     max-width: 100%;
     width: 100px;
@@ -23,7 +19,5 @@ box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       color: var(--text);
       font-size: 1rem;
     }
-  }
-  .btn {
   }
 }

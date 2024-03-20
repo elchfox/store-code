@@ -3,7 +3,7 @@ import { IProduct, IStorageName } from "../../types";
 import config from "../../utils/config";
 import { v4 as uuidv4 } from "uuid";
 
-type modeType = "create" | "edit" | "none";
+type modeType = "create" | "edit";
 type productState = {
   products: IProduct[];
   currentProduct: IProduct;
@@ -22,7 +22,7 @@ const initialState: productState = {
   products: [],
   currentProduct: initialProduct,
   loading: false,
-  modeType: "none",
+  modeType: "create",
   error: "",
 };
 export const fetchProducts = createAsyncThunk(
@@ -45,11 +45,11 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setCurrentProduct(state, action: PayloadAction<IProduct>) {
-      state.currentProduct = action.payload;
+    setCurrentProduct(state, action: PayloadAction<IProduct | undefined>) {
+      state.currentProduct = action.payload || initialProduct;
+      state.modeType = "edit";
     },
     setModeType(state, action: PayloadAction<modeType>) {
-      console.log(action.payload);
       state.modeType = action.payload;
       if (action.payload === "create") {
         state.currentProduct = initialProduct;

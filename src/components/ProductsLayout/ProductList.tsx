@@ -1,10 +1,7 @@
-import { Pagination } from "@mui/material";
+import { Flex, List } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setCurrentProduct,
-  setModeType,
-} from "../../store/products/productsSlice";
+import { setCurrentProduct } from "../../store/products/productsSlice";
 import { IProduct } from "../../types";
 import Product from "./Product";
 
@@ -18,7 +15,6 @@ const ProductList: React.FC<IProductListProps> = ({ data }) => {
   const [limitPerPage] = useState<number>(5);
 
   const onSelect = (product: IProduct) => {
-    dispatch(setModeType("edit"));
     dispatch(setCurrentProduct(product));
     setIsSelected(product.id);
   };
@@ -26,30 +22,36 @@ const ProductList: React.FC<IProductListProps> = ({ data }) => {
   const sliceFrom = currentPage * limitPerPage;
   const sliceTo = sliceFrom + limitPerPage;
   const productsRender = data.slice(sliceFrom, sliceTo);
-  const countPages = Math.ceil(data.length / limitPerPage);
 
   return (
-    <div className="flex column gap-l center">
-      <div className="data-list">
-        {productsRender.map((product, index) => (
-          <Product
-            {...product}
-            key={index}
-            isActive={isSelected === product.id}
-            onClick={() => onSelect(product)}
-          />
-        ))}
-      </div>
-      <div className="flex column center">
-        {countPages > 1 && (
-          <Pagination
-            count={countPages}
-            page={currentPage + 1}
-            onChange={(_, page) => setCurrentPage(page - 1)}
-          />
-        )}
-      </div>
-    </div>
+    <List
+      itemLayout="horizontal"
+      dataSource={productsRender}
+      grid={{
+        column: 1,
+      }}
+      style={{ gap: "1rem", height: "100%" }}
+      pagination={{
+        position: "bottom",
+        align: "center",
+        total: data.length,
+        defaultPageSize: limitPerPage,
+        defaultCurrent: 1,
+        simple: true,
+        onChange: (page) => setCurrentPage(page - 1),
+        // disabled:true
+      }}
+      renderItem={(item, index) => (
+        <div  key={index} style={{marginBottom:"1rem"}}>
+        <Product
+          {...item}
+         
+          isActive={isSelected === item.id}
+          onClick={() => onSelect(item)}
+        />
+        </div>
+      )}
+    />
   );
 };
 

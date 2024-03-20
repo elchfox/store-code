@@ -1,92 +1,86 @@
-import { InputAdornment, TextField, Typography } from "@mui/material";
+import { DollarOutlined } from "@ant-design/icons";
+import { Button, Card, Flex, Form, Image, Input, InputNumber } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import styles from "./Product.module.scss";
-import Card from "../Card";
 import { productCreateAndUpdate } from "../../store/products/productsSlice";
-import { Button, Flex, Input, Select, InputNumber } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
+import styles from "./Product.module.scss";
+import { SubmitButton } from "../Forms";
+import { IProduct } from "../../types";
 
 type ProductDetailsProps = {};
 
 const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
   const dispatch = useDispatch<any>();
-
+  const [form] = Form.useForm();
   const { currentProduct, modeType } = useSelector(
     (state: RootState) => state.products
   );
-  const [product, setProduct] = useState(currentProduct);
 
   useEffect(() => {
-    setProduct(currentProduct);
-    return () => {};
-  }, [currentProduct.id]);
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProduct({
-      ...product,
-      [event.target.name]: [event.target.value],
-    });
-  };
-
-  const onSubmit = () => {
-    dispatch(productCreateAndUpdate(product));
+    form.setFieldsValue(currentProduct);
+  }, [currentProduct]);
+  const onFinish = (values: any) => {
+    dispatch(productCreateAndUpdate(values));
   };
   return (
     <Card
-      className={`${styles.product} flex column gap-m`}
-      style={{ maxWidth: "20rem", width: "100%", minHeight: "20rem" }}
+      className={"shadow"}
+      style={{
+        maxWidth: "26rem",
+        width: "100%",
+        borderRadius: "0.5rem",
+        boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        gap: "1rem",
+      }}
+      title={
+        modeType === "create" ? "Create New Product" : currentProduct.title
+      }
+      bordered={false}
     >
-      <Typography variant={"h6"} component={"b"}>
-        Product Info
-      </Typography>
-      {modeType !== "none" && (
-        <div className="content">
-          <img
-            src={product.thumbnail}
-            className={styles.img}
-            alt={product.title}
-          />
-          <Flex vertical gap={12}>
-            <Input
-              placeholder="Name"
-              name="title"
-              required
-              maxLength={30}
-              onChange={onChange}
-              value={product.title}
-            />
-
-            <Input
+      <Flex vertical gap={"large"}>
+        <Image
+        style={{border:"1px solid", borderRadius:"0.5rem"}}
+          src={currentProduct.thumbnail}
+          width={100}
+          alt={currentProduct.title}
+          preview={false}
+        />
+        <Form
+          layout={"vertical"}
+          form={form}
+          name="control-hooks"
+          onFinish={onFinish}
+        >
+          <Form.Item name="title" rules={[{ required: true }]}>
+            <Input placeholder="Name" name="title" maxLength={30} />
+          </Form.Item>
+          <Form.Item name="description">
+            <Input.TextArea
               placeholder="Description"
-              name="description"
               maxLength={200}
-              onChange={onChange}
-              value={product.description}
+              showCount
+              autoSize={{
+                minRows: 5,
+                maxRows: 5,
+              }}
+              name="description"
             />
+          </Form.Item>
+          <Form.Item
+            name="price"
+            rules={[{ required: true }]}
+            style={{ maxWidth: 150 }}
+          >
             <InputNumber
-              prefix="￥"
               placeholder="Price"
-              type="number"
-              name="price"
               required
               addonBefore={<DollarOutlined />}
-              onChange={(value) => {
-                setProduct({
-                  ...product,
-                  price: Number(value),
-                });
-              }}
-              value={product.price}
             />
-            <Input />
-            <Button type={"primary"} onClick={onSubmit}>
-              Save
-            </Button>
-          </Flex>
-        </div>
-      )}
+          </Form.Item>
+          <SubmitButton form={form}>Save</SubmitButton>
+        </Form>
+      </Flex>
     </Card>
   );
 };

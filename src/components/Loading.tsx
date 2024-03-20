@@ -1,7 +1,9 @@
+import { Spin } from "antd";
+
 const Loading: React.FC = () => {
   return (
     <div className="loading-box centering">
-      <div className={`loader`} />
+      <Spin size={"large"}/>
     </div>
   );
 };

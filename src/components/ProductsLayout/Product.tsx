@@ -1,9 +1,8 @@
-import { Button, Typography } from "antd";
+import { Button, Card, Flex, Image, Typography } from "antd";
 import { useDispatch } from "react-redux";
-import { IProduct } from "../../types";
-import Card from "../Card";
-import styles from "./Product.module.scss";
 import { productDeleteById } from "../../store/products/productsSlice";
+import { IProduct } from "../../types";
+import styles from "./Product.module.scss";
 const { Title, Paragraph } = Typography;
 
 type IProductProps = {
@@ -22,16 +21,32 @@ const Product: React.FC<IProductProps> = (props) => {
       className={`${styles.product} ${isActive ? "active" : ""}`}
       onClick={onClick}
     >
-      <img src={thumbnail} className={styles.img} alt={title} />
-      <div className={styles.content}>
-        <Title level={5}>{title}</Title>
-        <Paragraph>{description}</Paragraph>
-      </div>
-      <div>
-        <Button type="primary" danger onClick={onDelete}>
-          Delete
-        </Button>
-      </div>
+      <Flex gap={"middle"}>
+        <Image
+          className={styles.img}
+          src={thumbnail}
+          alt={title}
+          preview={false}
+        />
+        <Flex vertical gap={"small"} flex={1}>
+          <Title level={5} style={{ margin: 0 }}>
+            {title}
+          </Title>
+          <Paragraph style={{ margin: 0 }}>{description}</Paragraph>
+        </Flex>
+        <Flex align={"end"}>
+          <Button
+            type="primary"
+            danger
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete();
+            }}
+          >
+            Delete
+          </Button>
+        </Flex>
+      </Flex>
     </Card>
   );
 };
