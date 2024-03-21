@@ -1,12 +1,10 @@
 import { DollarOutlined } from "@ant-design/icons";
-import { Button, Card, Flex, Form, Image, Input, InputNumber } from "antd";
-import { useEffect, useState } from "react";
+import { Card, Flex, Form, Image, Input, InputNumber } from "antd";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { productCreateAndUpdate } from "../../store/products/productsSlice";
-import styles from "./Product.module.scss";
 import { SubmitButton } from "../Forms";
-import { IProduct } from "../../types";
 
 type ProductDetailsProps = {};
 
@@ -21,7 +19,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
     form.setFieldsValue(currentProduct);
   }, [currentProduct]);
   const onFinish = (values: any) => {
-    dispatch(productCreateAndUpdate(values));
+    dispatch(productCreateAndUpdate({ ...currentProduct, ...values }));
   };
   return (
     <Card
@@ -40,7 +38,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
     >
       <Flex vertical gap={"large"}>
         <Image
-        style={{border:"1px solid", borderRadius:"0.5rem"}}
+          style={{ border: "1px solid", borderRadius: "0.5rem" }}
           src={currentProduct.thumbnail}
           width={100}
           alt={currentProduct.title}

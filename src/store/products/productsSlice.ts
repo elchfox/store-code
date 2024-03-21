@@ -68,13 +68,14 @@ const productsSlice = createSlice({
           updateDate: currentDate,
         };
       } else {
-        products.unshift({
+        const createProduct = {
           ...action.payload,
-
           updateDate: currentDate,
           createDate: currentDate,
           id: uuidv4(),
-        });
+        }
+        products.unshift(createProduct);
+        state.currentProduct = {...createProduct}
       }
       localStorage.setItem("/products", JSON.stringify(products));
       state.products = products;
